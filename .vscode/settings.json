@@ -1,0 +1,9 @@
+{
+    // "terminal.integrated.cwd": "${fileDirname}",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/stdtest",
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+}

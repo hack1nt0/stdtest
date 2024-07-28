@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WebViewerXM</class>
+ <widget class="QMainWindow" name="WebViewerXM">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>558</width>
+    <height>494</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="WebViewerX" name="view"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WebViewerX</class>
+   <extends>QWidget</extends>
+   <header location="global">cchelper.webviewer</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
