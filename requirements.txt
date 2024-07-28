@@ -1,7 +1,8 @@
-aiofiles
-psutil
 pyinstaller
 pyinstaller-hooks-contrib
+aiofiles
+psutil
 PySide6
 requests
 bs4
+Pillow
