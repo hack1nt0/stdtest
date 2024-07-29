@@ -15,8 +15,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-latest, ubuntu-latest, windows-latest]
-    
+        # os: [macOS-latest, ubuntu-latest, windows-latest]
+        os: [macOS-latest]
+            
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
@@ -30,4 +31,28 @@ jobs:
     - name: Build App
       run: |
         pyinstaller package.spec -y
+    - name: Compress Artifact
+      run: |
+        tar -czf dist/stdtest.tar.gz dist/stdtest.app
+        
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+        # body_path: CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
     
+    - name: Upload Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/stdtest.tar.gz
+        asset_name: stdtest.tar.gz
+        asset_content_type: application/gzip
