@@ -94,64 +94,51 @@
       <attribute name="title">
        <string>TesTools</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="leftMargin">
-        <number>12</number>
-       </property>
-       <property name="rightMargin">
-        <number>12</number>
-       </property>
-       <property name="bottomMargin">
-        <number>12</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QSplitter" name="splitter">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <widget class="TaskEditor" name="editor" native="true"/>
-         <widget class="QWidget" name="layoutWidget">
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="HugeFileViewer" name="log" native="true"/>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QPushButton" name="testButton">
-               <property name="text">
-                <string>Run</string>
-               </property>
-               <property name="default">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="terminateButton">
-               <property name="text">
-                <string>Terminate</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="copyButton">
-               <property name="text">
-                <string>Copy</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </widget>
+        <widget class="TaskEditor" name="editor" native="true"/>
+       </item>
+       <item>
+        <widget class="HugeFileViewer" name="log" native="true"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="testButton">
+           <property name="text">
+            <string>Run</string>
+           </property>
+           <property name="default">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="terminateButton">
+           <property name="text">
+            <string>Terminate</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="copyButton">
+           <property name="text">
+            <string>Copy</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
      <widget class="DocEditor" name="doceditor">
       <attribute name="title">
        <string>Editorial</string>
+      </attribute>
+     </widget>
+     <widget class="WhiteBoard" name="whiteboard">
+      <attribute name="title">
+       <string>Whiteboard</string>
       </attribute>
      </widget>
     </widget>
@@ -162,19 +149,25 @@
   <customwidget>
    <class>HugeFileViewer</class>
    <extends>QWidget</extends>
-   <header location="global">cchelper.fileviewer</header>
+   <header location="global">stdtest.fileviewer</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TaskEditor</class>
    <extends>QWidget</extends>
-   <header location="global">cchelper.taskeditor</header>
+   <header location="global">stdtest.taskeditor</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DocEditor</class>
    <extends>QWidget</extends>
-   <header location="global">cchelper.taskeditor</header>
+   <header location="global">stdtest.taskeditor</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WhiteBoard</class>
+   <extends>QWidget</extends>
+   <header location="global">stdtest.whiteboard</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

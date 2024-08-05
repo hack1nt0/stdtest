@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RunConfirmD</class>
- <widget class="QDialog" name="RunConfirmD">
+ <class>TemplateEditorD</class>
+ <widget class="QDialog" name="TemplateEditorD">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>507</width>
-    <height>267</height>
+    <width>476</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Test Options</string>
+   <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QSpinBox" name="cpuBox"/>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="memBox"/>
-     </item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QRadioButton" name="radioButton">
        <property name="text">
-        <string>Debug</string>
+        <string>Single Test</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_2">
        <property name="text">
-        <string>Release</string>
+        <string>Multiple tests</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_3">
+       <property name="text">
+        <string>Test number unknown</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEdit"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -44,7 +48,7 @@
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok|QDialogButtonBox::StandardButton::Save</set>
      </property>
     </widget>
    </item>
@@ -55,7 +59,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>RunConfirmD</receiver>
+   <receiver>TemplateEditorD</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -71,7 +75,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>RunConfirmD</receiver>
+   <receiver>TemplateEditorD</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

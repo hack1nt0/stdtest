@@ -90,7 +90,7 @@ class HugeFileViewer(QWidget, Ui_HugeFileViewer):
             Qt.TextInteractionFlag.TextSelectableByKeyboard
         )
 
-        self.textEdit.setFont(QFont(*conf.font))
+        # self.textEdit.setFont(QFont(*conf.font))
         self.textEdit.setTabStopDistance(
             self.textEdit.fontMetrics().horizontalAdvance(" " * 4)
         )

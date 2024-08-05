@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'testsuite.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.3
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,11 +16,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QPushButton,
-    QSizePolicy, QSplitter, QTabWidget, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QTabWidget, QVBoxLayout, QWidget)
 
 from stdtest.fileviewer import HugeFileViewer
 from stdtest.taskeditor import (DocEditor, TaskEditor)
+from stdtest.whiteboard import WhiteBoard
 
 class Ui_TestSuite(object):
     def setupUi(self, TestSuite):
@@ -77,38 +77,31 @@ class Ui_TestSuite(object):
         self.tabWidget.setTabBarAutoHide(False)
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.verticalLayout_3 = QVBoxLayout(self.tab)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(12, -1, 12, 12)
-        self.splitter = QSplitter(self.tab)
-        self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Vertical)
-        self.editor = TaskEditor(self.splitter)
-        self.editor.setObjectName(u"editor")
-        self.splitter.addWidget(self.editor)
-        self.layoutWidget = QWidget(self.splitter)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.verticalLayout = QVBoxLayout(self.layoutWidget)
+        self.verticalLayout = QVBoxLayout(self.tab)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.log = HugeFileViewer(self.layoutWidget)
+        self.editor = TaskEditor(self.tab)
+        self.editor.setObjectName(u"editor")
+
+        self.verticalLayout.addWidget(self.editor)
+
+        self.log = HugeFileViewer(self.tab)
         self.log.setObjectName(u"log")
 
         self.verticalLayout.addWidget(self.log)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.testButton = QPushButton(self.layoutWidget)
+        self.testButton = QPushButton(self.tab)
         self.testButton.setObjectName(u"testButton")
 
         self.horizontalLayout_2.addWidget(self.testButton)
 
-        self.terminateButton = QPushButton(self.layoutWidget)
+        self.terminateButton = QPushButton(self.tab)
         self.terminateButton.setObjectName(u"terminateButton")
 
         self.horizontalLayout_2.addWidget(self.terminateButton)
 
-        self.copyButton = QPushButton(self.layoutWidget)
+        self.copyButton = QPushButton(self.tab)
         self.copyButton.setObjectName(u"copyButton")
 
         self.horizontalLayout_2.addWidget(self.copyButton)
@@ -116,14 +109,13 @@ class Ui_TestSuite(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        self.splitter.addWidget(self.layoutWidget)
-
-        self.verticalLayout_3.addWidget(self.splitter)
-
         self.tabWidget.addTab(self.tab, "")
         self.doceditor = DocEditor()
         self.doceditor.setObjectName(u"doceditor")
         self.tabWidget.addTab(self.doceditor, "")
+        self.whiteboard = WhiteBoard()
+        self.whiteboard.setObjectName(u"whiteboard")
+        self.tabWidget.addTab(self.whiteboard, "")
 
         self.verticalLayout_2.addWidget(self.tabWidget)
 
@@ -149,5 +141,6 @@ class Ui_TestSuite(object):
         self.copyButton.setText(QCoreApplication.translate("TestSuite", u"Copy", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("TestSuite", u"TesTools", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.doceditor), QCoreApplication.translate("TestSuite", u"Editorial", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.whiteboard), QCoreApplication.translate("TestSuite", u"Whiteboard", None))
     # retranslateUi
 

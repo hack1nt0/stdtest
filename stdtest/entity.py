@@ -25,9 +25,10 @@ import pathlib
 import typing
 import shlex
 from datetime import datetime
+import subprocess
+import tempfile
 
 _WIN = sys.platform == "win32"
-
 
 __all__ = [
     "_WIN",
@@ -41,7 +42,6 @@ __all__ = [
     "load_all_tasks",
     "load_all_tasks_rec",
     "save_task_to_json",
-    "TaskCondition",
     "Test",
     "Verdict",
     "VS",
@@ -52,6 +52,8 @@ __all__ = [
     "TokenFile",
     "conf",
     "paths",
+    "dot2svgfile",
+    "get_svgfile",
 ]
 
 build_debug: bool = T
@@ -487,6 +489,8 @@ DOT = {
 digraph {
 	label="Test Input & Test Answer";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
 
 	testinput [label=<Test Input> shape=box]
 	testanswer [label=<Test Answer> shape=box]
@@ -502,6 +506,8 @@ digraph {
 digraph {
 	label="Test Input Only";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
 
 	testinput [label=<Test Input> shape=box]
 	solver [label=<Solver>]
@@ -514,6 +520,8 @@ digraph {
 digraph {
 	label="Generator & Comparator";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
     
 	testinput [label=<Test Input> shape=box]
 	checker [label=<Token-based Checker>]
@@ -528,6 +536,8 @@ digraph {
 digraph {
 	label="Generator only (Bruteforce)";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
     
 	testinput [label=<Test Input> shape=box]
     Generator -> testinput -> Solver
@@ -539,6 +549,8 @@ digraph {
 digraph {
 	label="Test Input & Interactive Checker";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
 	
 	testinput [label=<Test Input> shape=box]
 	solver [label=<Solver>]
@@ -554,6 +566,8 @@ digraph {
 digraph {
 	label="Generator & Interactive Checker";
 	rankdir=LR
+	bgcolor="transparent";
+	edge [color="blue" fontcolor="blue"]
     
 	generator [label=<Generator>]
 	testinput [label=<Test Input> shape=box]
@@ -566,6 +580,28 @@ digraph {
 }""",
 }
 
+def dot2svgfile(dot: str):
+    with (
+        tempfile.NamedTemporaryFile("w", suffix=".svg", delete=F) as svgfile,
+        tempfile.NamedTemporaryFile("w+") as dotfile,
+    ):
+        dotfile.write(dot)
+        dotfile.flush()
+        cmd = f"{'wsl ' if _WIN else ''}dot -Tsvg -Kdot -o {svgfile.name} {dotfile.name}"
+        subprocess.run(
+            cmd,
+            shell=T,
+            stderr=subprocess.PIPE,
+            check=T,
+        )
+        return svgfile.name
+
+def get_svgfile(input_type: TT, answer_type: TT, rewrite: bool=F) -> str:
+    dot = DOT[(input_type, answer_type)]
+    dotfile = paths.img(f"{input_type.value} & {answer_type.value}.svg")
+    if rewrite or not os.path.exists(dotfile):
+        open(dotfile, "w").write(open(dot2svgfile(dot)).read())
+    return dotfile
 
 @dataclass
 class Task:
@@ -679,16 +715,3 @@ def load_all_tasks_rec(root: str):
             yield task
             continue
 
-
-import re
-
-
-@dataclasses.dataclass
-class TaskCondition:
-    url: str = None
-    name: str = None
-    tags: int = 0
-    solver: re.Pattern = None
-    ctimeL: int = None
-    ctimeR: int = None
-    status: TS = None

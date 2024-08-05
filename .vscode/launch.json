@@ -24,5 +24,25 @@
             ],
             "justMyCode": true
         },
+        {
+            "name": "GViewer",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "stdtest.gviewer",
+            "args": [
+                ""
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "WhiteBoard",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "stdtest.whiteboard",
+            "args": [
+                ""
+            ],
+            "justMyCode": true
+        },
     ]
 }

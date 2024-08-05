@@ -16,18 +16,23 @@ class RunConfirmD(QDialog, Ui_RunConfirmD):
 
     def set_task(self, task: Task):
         self.task = task
-        self.view.set_htmlbody(
-            f"""
-<div style="display: flex;
-    align-items: center;
-    justify-content: center;     
-    height: 100%;"
->
-    <pre class="dot">{html.escape(DOT[(self.task.test_input_type, self.task.test_answer_type)])}</pre>
-</div>
-"""
-        )
-        # self.gviewer.set_dot(DOT[(self.task.test_input_type, self.task.test_answer_type)])
+        from PySide6.QtSvgWidgets import QSvgWidget
+        
+        self.view = QSvgWidget(get_svgfile(self.task.test_input_type, self.task.test_answer_type), self)
+        self.view.renderer().setAspectRatioMode(Qt.AspectRatioMode.KeepAspectRatio)
+        self.verticalLayout_2.insertWidget(1, self.view)
+
+#         self.view.set_htmlbody(
+#             f"""
+# <div style="display: flex;
+#     align-items: center;
+#     justify-content: center;     
+#     height: 100%;"
+# >
+#     <pre class="dot">{html.escape(DOT[(self.task.test_input_type, self.task.test_answer_type)])}</pre>
+# </div>
+# """
+#         )
 
         self.radioButton.setChecked(conf.build_debug)
         self.cpuBox.setValue(self.task.cpu_limit)

@@ -1,4 +1,6 @@
 from stdtest import *
+from .languageeditord import LanguageEditorD
+from .templateeditord import TemplateEditorD
 from .filechooser_ui import Ui_FileChooserD
 
 class FileChooserD(QDialog, Ui_FileChooserD):
@@ -8,74 +10,72 @@ class FileChooserD(QDialog, Ui_FileChooserD):
         self.setModal(T)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
-        self.namelineEdit.editingFinished.connect(self.name_changed)
+        self.textEdit.setTabStopDistance(
+            self.textEdit.fontMetrics().horizontalAdvance(" " * 4)
+        )
+        self.textEdit.setReadOnly(T)
+
         def pickfile():
             d = QFileDialog(self)
             d.setWindowModality(Qt.WindowModality.WindowModal)
-            # d.setDirectory(os.getcwd())
+            d.setDirectory(os.getcwd())
             d.setFileMode(QFileDialog.FileMode.ExistingFile)
             d.setWindowTitle("Pick file")
             if d.exec():
                 path = d.selectedFiles()[0]
-                self.namelineEdit.setText(os.path.relpath(path, self.task.path))
-        self.namepushButton.clicked.connect(pickfile)
+                self.set_file(path)
+        self.filepushButton.clicked.connect(pickfile)
 
-        self.radios = [self.radioButton, self.radioButton_2, self.radioButton_3]
-        self.radios[0].setChecked(T)
-        self.templateid = 0
-        for idx, radio in enumerate(self.radios):
-            radio.toggled.connect(lambda v, idx=idx: self.template_changed(idx))
-        
-        def langmodechanged(v: int):
-            self.debug.setVisible(not v)
-            self.release.setVisible(not v)
-        self.checkBox.stateChanged.connect(langmodechanged)
-    
-        self.applytemplateButton.clicked.connect(lambda: self.create(force=T))
-    
+        self.status.setStyleSheet("color: red")
 
-    def set_file(self, task: Task, filekey: str):
+        def apply_template():
+            d = TemplateEditorD(self)
+            d.set_file(self.file)
+            d.exec()
+        self.applytemplate.clicked.connect(apply_template)
+        def edit_commands():
+            d = LanguageEditorD(self)
+            d.set_file(self.file)
+            d.exec()
+        self.editcommands.clicked.connect(edit_commands)
+
+        self.applytemplate.setEnabled(F)
+        self.editcommands.setEnabled(F)
+    
+    @property
+    def file(self):
+        return self.filelineEdit.text().strip()
+
+    def set_task(self, task: Task, filekey: str):
         self.setWindowTitle(filekey)
         self.task = task
         self.filekey = filekey
-        self.file = getattr(task, filekey)
-        self.namelineEdit.setText(self.file)
-        self.namelineEdit.editingFinished.emit()
-
-    def name_changed(self):
-        self.file = self.namelineEdit.text().strip()
-        lang = conf.language(self.file)
-        if lang:
-            self.radios[0].setChecked(lang.interpreted)
-            self.textEdit.setPlainText(lang.template[0])
-            self.templateid = 0
-            self.checkBox.setChecked(lang.interpreted)
-            self.debug.setText(lang.debug)
-            self.release.setText(lang.release)
-            self.execute.setText(lang.run)
+        self.set_file(getattr(task, filekey))
     
-    def template_changed(self, idx: int):
-        self.templateid = idx
-        if not self.file:
+    def set_file(self, file: str):
+        if not file:
             return
-        self.textEdit.setPlainText(conf.language(self.file).template[idx])
-
-    def create(self, force: bool=F):
-        self.file = self.namelineEdit.text()
-        setattr(self.task, self.filekey, self.file)
-        if force or not os.path.exists(self.file):
-            open(self.file, "w").write(self.textEdit.toPlainText())
-        _, suffix = os.path.splitext(self.file)
-        lang = conf.languages.get(suffix, {})
-        lang["template"][self.templateid] = self.textEdit.toPlainText()
-        lang["interpreted"] = self.checkBox.isChecked()
-        lang["debug"] = self.debug.text()
-        lang["release"] = self.release.text()
-        lang["run"] = self.execute.text()
+        self.applytemplate.setEnabled(T)
+        self.editcommands.setEnabled(T)
+        file = os.path.abspath(file)
+        if not file.startswith(self.task.path):
+            self.status.setText(f"[{file}] not starts with [{self.task.path}]!")
+            return
+        self.watcher = QFileSystemWatcher([file], self)
+        self.watcher.fileChanged.connect(self.file_changed)
+        file = os.path.relpath(file, self.task.path)
+        self.filelineEdit.setText(file)
+        self.textEdit.setPlainText(open(file).read())
+    
+    def file_changed(self, v: str):
+        self.textEdit.setPlainText(open(v).read())
+        self.status.setText(f"Updated @ {datetime.now().isoformat()}")
     
     def done(self, arg__1: int) -> None:
         if arg__1:
-            if not self.namelineEdit.text().strip():
+            if not self.file:
+                self.status.setText("Empty filename!")
                 return
-            self.create()
+            setattr(self.task, self.filekey, self.file)
+            save_task_to_json(self.task)
         return super().done(arg__1)

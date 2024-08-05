@@ -1,7 +1,6 @@
 from stdtest import *
 from stdtest.main.main import Main
 from stdtest.listener import Listener
-from stdtest.webviewer import WebViewerXM
 
 
 class App(QApplication):
@@ -26,9 +25,11 @@ class App(QApplication):
 
 
 if __name__ == "__main__":
-    app = App(["--webEngineArgs", "--remote-debugging-port=7777"])
+    # app = App(["--webEngineArgs", "--remote-debugging-port=7777"])
     # app = QApplication()
+    app = App()
     windows["app"] = app
+    app.setStyleSheet(open(paths.data("stdtest.css")).read())
 
     # debugwebviewer = WebViewerXM()
     # debugwebviewer.hide()

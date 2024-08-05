@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TaskEditorD</class>
- <widget class="QDialog" name="TaskEditorD">
+ <class>LanguageEditorD</class>
+ <widget class="QDialog" name="LanguageEditorD">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>600</height>
+    <width>335</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,51 +15,51 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <widget class="TestParamsEditor" name="testParamsEditor">
-      <attribute name="title">
-       <string>Test Parameters</string>
-      </attribute>
-     </widget>
-     <widget class="TaskTagsEditor" name="taskTagsEditor">
-      <attribute name="title">
-       <string>Meta</string>
-      </attribute>
-     </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Interpreted?</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="debug">
+     <property name="placeholderText">
+      <string>Debug</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="release">
+     <property name="placeholderText">
+      <string>Release</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="execute">
+     <property name="placeholderText">
+      <string>Execute</string>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>TestParamsEditor</class>
-   <extends>QWidget</extends>
-   <header location="global">cchelper.taskeditor.testparamseditor</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TaskTagsEditor</class>
-   <extends>QWidget</extends>
-   <header location="global">cchelper.taskeditor.tasktagseditor</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>TaskEditorD</receiver>
+   <receiver>LanguageEditorD</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -75,7 +75,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>TaskEditorD</receiver>
+   <receiver>LanguageEditorD</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

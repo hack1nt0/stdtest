@@ -1,14 +1,17 @@
 from stdtest import *
 from .webviewerx import WebViewerX
-from stdtest.taskeditor.arxivconfirmd import ArxivConfirmD
 
 if __name__ == "__main__":
-    app = QApplication(['', '--no-sandbox'])
+    # app = QApplication(['', '--no-sandbox'])
     # w = WebViewerX()
-    w = ArxivConfirmD()
-    w.resize(640, 480)
-    cwd = os.path.dirname(os.path.realpath(__file__))
-    # w.set_root(os.path.join(cwd, "test.html"))
-    w.set_task(load_task_from_json("/Users/dy/gits/cc/D.Cat,FoxandMaximumArraySplit2"))
-    w.show()
-    sys.exit(app.exec())
+    # w.resize(640, 480)
+    # w.set_htmlbody("""
+    #     <p>$$ e = mc^2 $$</p>
+    #                """)
+    # w.show()
+    # sys.exit(app.exec())
+
+    import webview
+
+    window = webview.create_window('', url="file:///Users/dy/gits/cc/alegs/index.html")
+    webview.start()

@@ -87,8 +87,6 @@ class TestSuite(QWidget, Ui_TestSuite):
         return self.tasks[self.tasksbox.currentIndex()] if self.tasks else None
     
     def set_tasks(self, tasks: List[Task]):
-        if self.task:
-            save_task_to_json(self.task)
         self.tasks = tasks
         self.tasksbox.blockSignals(T)
         self.tasksbox.clear()
@@ -135,7 +133,6 @@ class TestSuite(QWidget, Ui_TestSuite):
         self.log.init()
 
     def test_task(self):
-        self.editor.save_task()
         d = RunConfirmD(self)
         d.set_task(self.task)
         if d.exec():

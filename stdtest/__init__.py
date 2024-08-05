@@ -44,10 +44,11 @@ W, H = 750, 750
 from PySide6.QtCore import *
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
-from PySide6.QtSql import *
-from PySide6.QtCharts import *
+# from PySide6.QtSql import *
+# from PySide6.QtCharts import *
 from PySide6.QtStateMachine import *
-from PySide6 import QtNetwork, QtWebChannel, QtWebEngineWidgets
+# from PySide6 import QtNetwork, QtWebChannel, QtWebEngineWidgets
+# from PySide6.QtWebEngineWidgets import QWebEngineView
 
 WHITE = QColor(255, 255, 255)
 BLACK = QColor(0, 0, 0)

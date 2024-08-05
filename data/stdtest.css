@@ -1,0 +1,8 @@
+QPlainTextEdit, QTextEdit {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', 'PT Mono', 'Courier New';
+    /* color: white;
+    background-color: rgb(2,4,94);
+    selection-background-color: rgb(5,128,128);
+    selection-color: black; */
+}

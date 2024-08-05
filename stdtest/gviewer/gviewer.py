@@ -88,5 +88,6 @@ class GViewer(QGraphicsView):
             self.setSceneRect(self.svgitem.boundingRect())
             # self.setMinimumSize(self.svgitem.boundingRect().size().toSize())
 
+            
             return svgfile.name
     
